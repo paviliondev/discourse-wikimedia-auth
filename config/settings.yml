@@ -1,0 +1,5 @@
+plugins:
+  wikimedia_auth_enabled: true
+  wikimedia_consumer_key: ""
+  wikimedia_consumer_secret: ""
+  wikimedia_callback_url: "oob"

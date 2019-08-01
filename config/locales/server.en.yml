@@ -1,0 +1,9 @@
+en:
+  login:
+    authenticator_email_not_verified: "Please verify your Wikimedia email."
+  
+  site_settings:
+    wikimedia_auth_enabled: "Wikimedia auth enabled"
+    wikimedia_consumer_key: "Wikimedia consumer key"
+    wikimedia_consumer_secret: "Wikimedia consumer secret"
+    wikimedia_callback_url: "Wikimedia callback url"
