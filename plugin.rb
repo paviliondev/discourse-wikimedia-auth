@@ -17,7 +17,7 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
     auth_token[:extra]['raw_info']['confirmed_email']
   end
   
-  def can_connect_existing_user?
+  def can_revoke?
     false
   end
 
@@ -46,6 +46,7 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
                         options = strategy.options
                         options[:consumer_key] = SiteSetting.wikimedia_consumer_key
                         options[:consumer_secret] = SiteSetting.wikimedia_consumer_secret
+                        options[:client_options][:site] = SiteSetting.wikimedia_auth_site
                         
                         def strategy.callback_url
                           SiteSetting.wikimedia_callback_url
