@@ -5,7 +5,7 @@ export default {
   name: 'wikimedia',
   initialize() {
     withPluginApi('0.8.23', api => {
-      api.modifyClass('controllers:preferences/account', {
+      api.modifyClass('controller:preferences/account', {
         @computed
         canUpdateAssociatedAccounts() {
           return false;
