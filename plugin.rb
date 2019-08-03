@@ -59,3 +59,9 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
 end
 
 auth_provider authenticator: WikimediaAuthenticator.new
+
+register_css <<CSS
+  .create-account-email {
+    display: none !important;
+  }
+CSS
