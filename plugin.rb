@@ -66,3 +66,26 @@ register_css <<CSS
     display: none !important;
   }
 CSS
+
+after_initialize do
+  module UsersControllerExtension
+    def create
+      ## Ensure that username sent by the client is the same as suggester's version of the Wikimedia username
+      ## Note that email is ensured by the email validation process
+
+      wikimedia_username = session[:authentication][:username]&.unicode_normalize
+      suggested_username = UserNameSuggester.suggest(wikimedia_username)
+      
+      if suggested_username != params[:username]
+        return fail_with("login.non_wikimedia_username")
+      end
+        
+      super
+    end
+  end
+  
+  require_dependency 'users_controller'
+  class ::UsersController
+    prepend UsersControllerExtension
+  end
+end
