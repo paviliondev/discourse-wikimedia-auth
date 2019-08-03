@@ -6,7 +6,6 @@
 
 gem 'omniauth-mediawiki', '0.0.4'
 
-register_svg_icon "wikipedia-w" if respond_to?(:register_svg_icon)
 enabled_site_setting :wikimedia_auth_enabled
 
 class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
@@ -33,7 +32,9 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       auth_token[:info][:nickname] = raw_info['username'] if raw_info['username']
       auth_token[:info][:name] = raw_info['realname'] if raw_info['realname']
       
-      super(auth_token, existing_account: nil)
+      auth_result = super(auth_token, existing_account: nil)
+      auth_result.omit_username = true
+      auth_result
     end
   end
 
@@ -57,5 +58,4 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   end
 end
 
-auth_provider icon: 'wikipedia-w',
-              authenticator: WikimediaAuthenticator.new
+auth_provider authenticator: WikimediaAuthenticator.new

@@ -1,5 +1,6 @@
 en:
   js:
     login:
-      wikimedia:
+      mediawiki:
+        name: "Wikimedia"
         title: "Login with Wikimedia"
