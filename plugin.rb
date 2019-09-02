@@ -100,4 +100,16 @@ after_initialize do
   class ::UsersController
     prepend UsersControllerExtension
   end
+  
+  module GuardianWikimediaExtension
+    def can_edit_username?(user)
+      return false if SiteSetting.wikimedia_auth_enabled
+      super(user)
+    end
+  end
+  
+  require_dependency 'guardian'
+  class ::Guardian
+    prepend GuardianWikimediaExtension
+  end
 end
