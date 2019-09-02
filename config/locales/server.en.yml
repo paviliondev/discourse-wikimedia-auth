@@ -1,6 +1,7 @@
 en:
   login:
     authenticator_email_not_verified: "Please verify your Wikimedia email."
+    authenticator_existing_account: "Your Wikimedia email is associated with an existing account."
     non_wikimedia_username: "You must use your Wikimedia username."
   
   site_settings:

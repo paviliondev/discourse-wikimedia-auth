@@ -22,18 +22,35 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   def can_revoke?
     false
   end
+  
+  def can_connect_existing_user?
+    false
+  end
 
-  def after_authenticate(auth_token)
-    if !primary_email_verified?(auth_token)
-      result = Auth::Result.new
-      result.failed = true
-      result.failed_reason = I18n.t("login.authenticator_email_not_verified")
-      result
+  def after_authenticate(auth_token, existing_account: nil)
+    raw_info = auth_token[:extra]['raw_info']
+    
+    ## Deny entry if either:
+    # 1) the user's Wikimedia email is not verified; or
+    # 2) a user has previously authenticated with the same email under a different Wikimedia account
+    ##
+
+    if !primary_email_verified?(auth_token) ||
+       (existing_associated_account = ::UserAssociatedAccount.where(
+        "info::json->>'email' = '#{raw_info['email']}' AND
+         info::json->>'nickname' != '#{raw_info['username']}'").exists?)
+      
+      error_result = Auth::Result.new
+      error_result.failed = true
+      error_result.failed_reason = existing_associated_account ?
+        I18n.t("login.authenticator_existing_account", { email: raw_info['email']}) :
+        I18n.t("login.authenticator_email_not_verified")
+
+      error_result
     else
-      raw_info = auth_token[:extra]['raw_info']
       auth_token[:info][:nickname] = raw_info['username'] if raw_info['username']
       
-      auth_result = super(auth_token, existing_account: nil)
+      auth_result = super(auth_token, existing_account: existing_account)
       auth_result.omit_username = true
       auth_result
     end
