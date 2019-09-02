@@ -32,7 +32,6 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
     else
       raw_info = auth_token[:extra]['raw_info']
       auth_token[:info][:nickname] = raw_info['username'] if raw_info['username']
-      auth_token[:info][:name] = raw_info['realname'] if raw_info['realname']
       
       auth_result = super(auth_token, existing_account: nil)
       auth_result.omit_username = true
