@@ -8,6 +8,8 @@ gem 'omniauth-mediawiki', '0.0.4'
 
 enabled_site_setting :wikimedia_auth_enabled
 
+register_asset 'stylesheets/common/wikimedia.scss'
+
 class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   def name
     'mediawiki'
@@ -60,12 +62,6 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
 end
 
 auth_provider authenticator: WikimediaAuthenticator.new
-
-register_css <<CSS
-  .create-account-email {
-    display: none !important;
-  }
-CSS
 
 after_initialize do
   module UsersControllerExtension
