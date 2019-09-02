@@ -1,6 +1,17 @@
 en:
   js:
+    create_account:
+      description: >
+        Welcome to Wikimedia Space. You have been logged in using your Wikimedia account.
+        Your username and email will be the same as on Wikimedia sites.
+        If you would like to add a full or alternative name to display in your profile,
+        you may do so here, or later from user preferences.
+
     login:
       mediawiki:
         name: "Wikimedia"
         title: "Login with Wikimedia"
+        
+    user:
+      name:
+        instructions: "your full/alternative name (optional)"
