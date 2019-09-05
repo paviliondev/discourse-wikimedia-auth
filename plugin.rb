@@ -38,7 +38,7 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
     if !primary_email_verified?(auth_token) ||
        (existing_associated_account = ::UserAssociatedAccount.where(
         "info::json->>'email' = '#{raw_info['email']}' AND
-         info::json->>'nickname' != '#{raw_info['username']}'").exists?)
+         provider_uid != '#{raw_info['sub']}'").exists?)
       
       error_result = Auth::Result.new
       error_result.failed = true
