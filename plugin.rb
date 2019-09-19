@@ -16,8 +16,8 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   end
   
   def primary_email_verified?(auth_token)
-    auth_token[:extra]['raw_info'] ?
-    auth_token[:extra]['raw_info']['confirmed_email'] :
+    auth_token[:extra]['confirmed_email'].present? ?
+    auth_token[:extra]['confirmed_email'] :
     false
   end
   
@@ -31,6 +31,7 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
 
   def after_authenticate(auth_token, existing_account: nil)
     raw_info = auth_token[:extra]['raw_info']
+    auth_token[:extra] = raw_info || {}
     
     ## Deny entry if either:
     # 1) the user's Wikimedia email is not verified; or
@@ -51,7 +52,6 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       error_result
     else
       auth_token[:info][:nickname] = raw_info['username'] if raw_info['username']
-      auth_token[:extra] = raw_info
       
       auth_result = super(auth_token, existing_account: existing_account)
       auth_result.omit_username = true
