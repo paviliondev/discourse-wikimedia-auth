@@ -4,3 +4,4 @@ plugins:
   wikimedia_consumer_secret: ""
   wikimedia_callback_url: "oob"
   wikimedia_auth_site: "https://meta.wikimedia.org"
+  wikimedia_username_conformity_login: false

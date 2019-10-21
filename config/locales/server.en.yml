@@ -10,3 +10,4 @@ en:
     wikimedia_consumer_secret: "Wikimedia consumer secret"
     wikimedia_callback_url: "Wikimedia callback url"
     wikimedia_auth_site: "Wikimedia auth site"
+    wikimedia_username_conformity: "Enforce Wikimedia username conformity at login"

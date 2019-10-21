@@ -10,6 +10,12 @@ enabled_site_setting :wikimedia_auth_enabled
 
 register_asset 'stylesheets/common/wikimedia.scss'
 
+module WikimediaUsername
+  def self.adapt(username)
+    UserNameSuggester.suggest(username&.unicode_normalize)
+  end
+end
+
 class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   def name
     'mediawiki'
@@ -27,6 +33,10 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
   
   def can_connect_existing_user?
     false
+  end
+  
+  def always_update_user_username?
+    SiteSetting.wikimedia_username_conformity_login
   end
 
   def after_authenticate(auth_token, existing_account: nil)
@@ -52,8 +62,20 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       error_result
     else
       auth_token[:info][:nickname] = raw_info['username'] if raw_info['username']
-      
       auth_result = super(auth_token, existing_account: existing_account)
+      
+      ## Update user's username from the auth payload
+      if auth_result.user &&
+          always_update_user_username? &&
+          auth_result.username
+                
+        UsernameChanger.change(
+          auth_result.user,
+          WikimediaUsername.adapt(auth_result.username),
+          Discourse.system_user
+        )
+      end
+      
       auth_result.omit_username = true
       auth_result
     end
@@ -87,11 +109,10 @@ after_initialize do
     def create
       ## Ensure that username sent by the client is the same as suggester's version of the Wikimedia username
       ## Note that email is ensured by the email validation process
-
-      wikimedia_username = session[:authentication][:username]&.unicode_normalize
-      suggested_username = UserNameSuggester.suggest(wikimedia_username)
       
-      if suggested_username != params[:username]
+      wikimedia_username = WikimediaUsername.adapt(session[:authentication][:username])
+      
+      if wikimedia_username != params[:username]
         return fail_with("login.non_wikimedia_username")
       end
         
