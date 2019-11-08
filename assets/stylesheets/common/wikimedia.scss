@@ -10,3 +10,22 @@
 button#login-link {
   display: none;
 }
+
+.full-name {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.wiki-username {
+  display: inline-block;
+  vertical-align: top;
+  
+  &.add-margin {
+    margin-left: 10px !important;
+  }
+
+  img {
+    height: 1em;
+    width: 1em;
+  }
+}

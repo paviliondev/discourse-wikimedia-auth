@@ -140,4 +140,10 @@ after_initialize do
   class ::Guardian
     prepend GuardianWikimediaExtension
   end
+  
+  add_to_serializer(:user, :wiki_username) do
+    UserAssociatedAccount.where(user_id: object.id)
+      .select("info::json->>'nickname' as wiki_username")
+      .first&.wiki_username
+  end
 end
