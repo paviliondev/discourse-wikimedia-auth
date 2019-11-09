@@ -1,4 +1,4 @@
-import { default as computed } from 'ember-addons/ember-computed-decorators';
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Ember.Component.extend({
   classNameBindings: [':wiki-username', 'user.name:add-margin'],
@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     })
   },
   
-  @computed('user.wiki_username')
+  @discourseComputed('user.wiki_username')
   wikiUserUrl(wikiUsername) {
     return this.siteSettings.wikimedia_auth_site + "/wiki/User:" + wikiUsername;
   }

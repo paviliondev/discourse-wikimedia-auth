@@ -1,12 +1,12 @@
 import { withPluginApi } from 'discourse/lib/plugin-api';
-import { default as computed } from 'ember-addons/ember-computed-decorators';
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default {
   name: 'wikimedia',
   initialize() {
     withPluginApi('0.8.23', api => {
       api.modifyClass('controller:preferences/account', {
-        @computed
+        @discourseComputed
         canUpdateAssociatedAccounts() {
           return false;
         }
