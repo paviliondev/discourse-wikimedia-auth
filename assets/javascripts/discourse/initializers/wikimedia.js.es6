@@ -1,4 +1,5 @@
 import { withPluginApi } from 'discourse/lib/plugin-api';
+import { default as computed } from 'ember-addons/ember-computed-decorators';
 
 export default {
   name: 'wikimedia',
