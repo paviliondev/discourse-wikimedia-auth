@@ -14,15 +14,15 @@ button#login-link {
 .full-name {
   display: inline-block;
   vertical-align: top;
+  
+  &.add-margin {
+    margin-right: 10px !important;
+  }
 }
 
 .wiki-username {
   display: inline-block;
   vertical-align: top;
-  
-  &.add-margin {
-    margin-left: 10px !important;
-  }
 
   img {
     height: 1em;
