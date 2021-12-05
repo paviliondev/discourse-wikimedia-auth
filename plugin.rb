@@ -11,8 +11,8 @@ enabled_site_setting :wikimedia_auth_enabled
 register_asset 'stylesheets/common/wikimedia.scss'
 
 module WikimediaUsername
-  def self.adapt(username, allowed_username = nil)
-    UserNameSuggester.suggest(username&.unicode_normalize, allowed_username)
+  def self.adapt(username)
+    UserNameSuggester.suggest(username&.unicode_normalize)
   end
 end
 
@@ -69,8 +69,7 @@ class WikimediaAuthenticator < ::Auth::ManagedAuthenticator
           always_update_user_username? &&
           auth_result.user.username != (
             wikimedia_username = WikimediaUsername.adapt(
-              auth_result.username,
-              auth_result.user.username
+              auth_result.username
             )
           )  
         UsernameChanger.change(
