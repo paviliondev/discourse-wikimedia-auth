@@ -2,7 +2,7 @@
 
 # name: discourse-wikimedia-auth
 # about: Enable Login via Wikimedia
-# version: 0.1.0
+# version: 0.1.1
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-wikimedia-auth
 
