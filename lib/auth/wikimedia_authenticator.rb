@@ -40,7 +40,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       error_result = Auth::Result.new
       error_result.failed = true
       error_result.failed_reason = existing_associated_account ?
-        I18n.t("login.authenticator_existing_account", { email: raw_info['email']}) :
+        I18n.t("login.authenticator_existing_account", { email: raw_info['email'] }) :
         I18n.t("login.authenticator_email_not_verified")
 
       error_result
@@ -53,7 +53,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
           always_update_user_username? &&
           auth_result.user.username != (
             wikimedia_username = WikimediaUsername.adapt(auth_result.username)
-          )  
+          )
         UsernameChanger.change(
           auth_result.user,
           wikimedia_username,
