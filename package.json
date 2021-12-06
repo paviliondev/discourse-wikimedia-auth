@@ -1,7 +1,7 @@
 {
-  "name": "discourse-custom-wizard",
+  "name": "discourse-wikimedia-auth",
   "version": "1.0.0",
-  "repository": "git@github.com:paviliondev/discourse-custom-wizard.git",
+  "repository": "git@github.com:paviliondev/discourse-wikimedia-auth.git",
   "author": "Pavilion",
   "license": "GPL V2",
   "devDependencies": {
