@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WikimediaUsername
-  def self.adapt(username, allowed_username = nil)
-    UserNameSuggester.suggest(username&.unicode_normalize, allowed_username)
+  def self.adapt(username)
+    UserNameSuggester.suggest(username&.unicode_normalize)
   end
 end

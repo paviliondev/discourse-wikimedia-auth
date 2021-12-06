@@ -52,10 +52,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       if auth_result.user &&
           always_update_user_username? &&
           auth_result.user.username != (
-            wikimedia_username = WikimediaUsername.adapt(
-              auth_result.username,
-              auth_result.user.username
-            )
+            wikimedia_username = WikimediaUsername.adapt(auth_result.username)
           )  
         UsernameChanger.change(
           auth_result.user,
