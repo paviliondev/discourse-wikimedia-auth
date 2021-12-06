@@ -5,6 +5,7 @@ require 'rails_helper'
 describe Auth::WikimediaAuthenticator do
   let(:user) { Fabricate(:user) }
   let(:wikimedia_username) { "Wikimedia Username" }
+  let(:wikimedia_uid) { "58875557" }
 
   def build_raw_info
     {
@@ -30,7 +31,7 @@ describe Auth::WikimediaAuthenticator do
   def build_auth_hash(info = nil)
     OmniAuth::AuthHash.new(
       provider: "mediawiki",
-      uid: "58875557",
+      uid: wikimedia_uid,
       info: {
         name: wikimedia_username,
         email: user.email
@@ -57,11 +58,18 @@ describe Auth::WikimediaAuthenticator do
     end
 
     it "does not allow authentication from account with previously used email" do
-      UserAssociatedAccount.create!(provider_name: "mediawiki", user_id: user.id, provider_uid: "123456789", info: { email: user.email })
+      UserAssociatedAccount.create!(provider_name: "mediawiki", user_id: user.id, provider_uid: "12345", info: { email: user.email })
 
       result = described_class.new.after_authenticate(build_auth_hash)
       expect(result.failed).to eq(true)
       expect(result.failed_reason).to eq(I18n.t("login.authenticator_existing_account"))
+    end
+
+    it "allows authentication from account with previously used email if provider was different" do
+      UserAssociatedAccount.create!(provider_name: "mediawiki2", user_id: user.id, provider_uid: "12345", info: { email: user.email })
+
+      result = described_class.new.after_authenticate(build_auth_hash)
+      expect(result.failed).to eq(false)
     end
 
     it "adapts Wikimedia username to Discourse username if username conformity is enabled" do
