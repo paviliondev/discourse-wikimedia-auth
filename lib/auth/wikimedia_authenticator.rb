@@ -35,7 +35,8 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
     if !primary_email_verified?(auth_token) ||
        (existing_associated_account = ::UserAssociatedAccount.where(
         "info::json->>'email' = '#{raw_info['email']}' AND
-         provider_uid != '#{raw_info['sub']}'").exists?)
+         provider_uid != '#{raw_info['sub']}' AND
+         provider_name = '#{name}'").exists?)
 
       error_result = Auth::Result.new
       error_result.failed = true
