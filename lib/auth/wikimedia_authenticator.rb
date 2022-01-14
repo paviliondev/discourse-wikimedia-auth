@@ -66,7 +66,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
       auth_result
     end
   end
-
+  # :nocov:
   def register_middleware(omniauth)
     omniauth.provider :mediawiki,
                       name: name,
@@ -82,7 +82,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
                         end
                       }
   end
-
+  # :nocov:
   def enabled?
     SiteSetting.wikimedia_auth_enabled
   end

@@ -24,12 +24,10 @@ auth_provider authenticator: Auth::WikimediaAuthenticator.new
 after_initialize do
   %w(
     ../extensions/guardian.rb
-    ../extensions/users_controller.rb
   ).each do |path|
     load File.expand_path(path, __FILE__)
   end
 
-  ::UsersController.prepend UsersControllerExtension
   ::Guardian.prepend GuardianWikimediaExtension
 
   add_to_serializer(:user, :wiki_username) do
