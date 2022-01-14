@@ -62,7 +62,7 @@ class Auth::WikimediaAuthenticator < ::Auth::ManagedAuthenticator
         )
       end
 
-      auth_result.omit_username = true
+      auth_result.overrides_username = true
       auth_result
     end
   end
