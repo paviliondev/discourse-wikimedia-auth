@@ -133,7 +133,7 @@ jobs:
 
       - name: Plugin RSpec with Coverage
         if: matrix.build_type == 'backend' && steps.check_spec.outputs.files_exists == 'true'
-        run: SIMPLECOV=1 bin/rake plugin:spec[${{ steps.repo-name.outputs.value }}]
+        run: bin/rake plugin:spec[${{ steps.repo-name.outputs.value }}]
 
       - name: Plugin QUnit
         if: matrix.build_type == 'frontend' && steps.check_qunit.outputs.files_exists == 'true'
