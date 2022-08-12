@@ -5,6 +5,7 @@
 # version: 0.1.3
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-wikimedia-auth
+# contact_emails: development@pavilion.tech
 
 gem 'omniauth-mediawiki', '0.0.4'
 
